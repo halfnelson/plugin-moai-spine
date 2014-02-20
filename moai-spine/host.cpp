@@ -37,12 +37,13 @@ int spAtlasFilterToGL( spAtlasFilter filter ) {
 
 void _spAtlasPage_createTexture ( spAtlasPage* self, const char* path ) {
 	
-	MOAILuaMemberRef& createTextureRef = MOAISpine::Get ().GetCreateTextureRef();
+	MOAILuaStrongRef& createTextureRef = MOAISpine::Get ().GetCreateTextureRef();
 	MOAITexture* texture;
 	
 	if ( MOAILuaRuntime::IsValid ()) {
 		
-		if ( createTextureRef.PushRef(state) ) {
+		if ( createTextureRef ) { 
+			MOAIScopedLuaState state = createTextureRef.GetSelf(); 
 			
 			state.Push ( path );
 			state.Push ( spAtlasFilterToGL(self->minFilter) );
@@ -75,12 +76,12 @@ void _spAtlasPage_disposeTexture ( spAtlasPage* self ) {
 //----------------------------------------------------------------//
 char* _spUtil_readFile (const char* path, int* length) {
 	
-	MOAILuaMemberRef& readFileRef = MOAISpine::Get ().GetReadFileRef();
+	MOAILuaStrongRef& readFileRef = MOAISpine::Get ().GetReadFileRef();
 	
 	if ( MOAILuaRuntime::IsValid()) {
 		
-		if ( readFileRef.PushRef(state) ) {
-			
+		if ( readFileRef ) {
+			MOAIScopedLuaState state = readFileRef.GetSelf();
 			state.Push ( path );
 			state.DebugCall ( 1, 1 );
 			
@@ -92,14 +93,18 @@ char* _spUtil_readFile (const char* path, int* length) {
 }
 
 //----------------------------------------------------------------//
-void AKUFinalizeSpine () {
+void MOAISpineAppFinalize () {
 	
 	if ( !sIsInitialized ) return;
 	sIsInitialized = false;
 }
 
+void MOAISpineAppInitialize () {
+
+}
+
 //----------------------------------------------------------------//
-void AKUInitializeSpine () {
+void MOAISpineContextInitialize () {
 
 	if ( !sIsInitialized ) {
 		sIsInitialized = true;
