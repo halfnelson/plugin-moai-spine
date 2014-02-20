@@ -37,13 +37,12 @@ int spAtlasFilterToGL( spAtlasFilter filter ) {
 
 void _spAtlasPage_createTexture ( spAtlasPage* self, const char* path ) {
 	
-	MOAILuaRef& createTextureRef = MOAISpine::Get ().GetCreateTextureRef();
+	MOAILuaMemberRef& createTextureRef = MOAISpine::Get ().GetCreateTextureRef();
 	MOAITexture* texture;
 	
 	if ( MOAILuaRuntime::IsValid ()) {
 		
-		if ( createTextureRef ) {
-			MOAIScopedLuaState state = createTextureRef.GetSelf ();
+		if ( createTextureRef.PushRef(state) ) {
 			
 			state.Push ( path );
 			state.Push ( spAtlasFilterToGL(self->minFilter) );
@@ -76,12 +75,11 @@ void _spAtlasPage_disposeTexture ( spAtlasPage* self ) {
 //----------------------------------------------------------------//
 char* _spUtil_readFile (const char* path, int* length) {
 	
-	MOAILuaRef& readFileRef = MOAISpine::Get ().GetReadFileRef();
+	MOAILuaMemberRef& readFileRef = MOAISpine::Get ().GetReadFileRef();
 	
 	if ( MOAILuaRuntime::IsValid()) {
 		
-		if ( readFileRef ) {
-			MOAIScopedLuaState state = readFileRef.GetSelf ();
+		if ( readFileRef.PushRef(state) ) {
 			
 			state.Push ( path );
 			state.DebugCall ( 1, 1 );

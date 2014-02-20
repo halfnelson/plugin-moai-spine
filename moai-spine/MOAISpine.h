@@ -18,8 +18,8 @@ class MOAISpine :
 	public MOAIGlobalClass < MOAISpine, MOAILuaObject > {
 private:
 	
-	MOAILuaRef mReadFileRef;
-	MOAILuaRef mCreateTextureRef;
+	MOAILuaStrongRef mReadFileRef;
+	MOAILuaStrongRef mCreateTextureRef;
 	
 	//----------------------------------------------------------------//
 	static int		_setCreateTexture	( lua_State* L );
@@ -29,8 +29,8 @@ public:
 	
 	DECL_LUA_SINGLETON ( MOAISpine )
 		
-	GET ( MOAILuaRef&, ReadFileRef, mReadFileRef )
-	GET ( MOAILuaRef&, CreateTextureRef, mCreateTextureRef )
+	GET ( MOAILuaStrongRef&, ReadFileRef, mReadFileRef )
+	GET ( MOAILuaStrongRef&, CreateTextureRef, mCreateTextureRef )
 	
 
 	//----------------------------------------------------------------//

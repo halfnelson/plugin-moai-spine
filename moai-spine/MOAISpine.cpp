@@ -21,7 +21,7 @@ int MOAISpine::_setCreateTexture ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	if ( state.IsType ( 1, LUA_TFUNCTION )) {
-		MOAISpine::Get ().GetCreateTextureRef().SetStrongRef ( state, 1 );
+		MOAISpine::Get ().GetCreateTextureRef().SetRef ( state, 1 );
 	}
 	
 	return 0;
@@ -42,7 +42,7 @@ int MOAISpine::_setReadFile ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	if ( state.IsType ( 1, LUA_TFUNCTION )) {
-		MOAISpine::Get ().GetReadFileRef().SetStrongRef ( state, 1 );
+		MOAISpine::Get ().GetReadFileRef().SetRef ( state, 1 );
 	}
 		
 	return 0;
